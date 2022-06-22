@@ -1,11 +1,20 @@
 'use strict';
+
+//list of problems so far:
+//console shows "there is no image here" on bathroom despite the image being there
+//clicks are not being counted
+//can't tell if the randomizer function works
+//don't know how to only show 3 images at once 
+
+
+
 //holds all product objects
 let allProducts = [];
 //sets click limit to 25 times
 let maxClicks = 25; 
 let totalClicks = 0;
 //holds all product names
-let productNames = ['bag', 'banana', 'bathroom', 'boots'];
+let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 
 //create constructor function that creates an object associated with each product
 function Product(name, path){
@@ -31,6 +40,7 @@ const imageContainer = document.getElementById('image-container');
 const resultContainer = document.getElementById('results');
 let img_one = document.querySelector('#image-container img:first-child');
 let img_two = document.querySelector('#image-container img:nth-child(2)');
+let img_three = document.querySelector('#image-container img:nth-child(3)');
 let resultsButton = document.getElementById('results-button')
 
 //add event listener
@@ -40,7 +50,24 @@ resultsButton.addEventListener('click', showResults)
 let bag = new Product('bag', './assets/bag.jpg')
 //or
 //let bag0 = new Product(productNames[0], './assets' + productNames[0] + '.jpg')
-let banana = new Product('banana', './assets/banana.jpg')
+let banana = new Product('banana', './assets/banana.jpg');
+let bathroom = new Product('bathroom', './assets/bathroom.jpg');
+let boots = new Product('boots', './assets/boots.jpg');
+let breakfast = new Product('breakfast', './assets/breakfast.jpg');
+let bubblegum = new Product('bubblegum', './assets/bubbulegum.jpg');
+let chair = new Product('chair', './assets/chair.jpg');
+let cthulhu = new Product('cthulhu', './assets/cthulhu.jpg');
+let dog_duck = new Product('dog-duck', './assets/dog-duck.jpg');
+let dragon = new Product('dragon', './assets/dragon.jpg');
+let pen = new Product('pen', './assets/pen.jpg');
+let pet_sweep = new Product('pet-sweep', './assets/pet-sweep.jpg');
+let scissors = new Product('scissors', './assets/scissors.jpg');
+let shark = new Product('shark', './assets/shark.jpg');
+let sweep = new Product('sweep', './assets/sweep.jpg');
+let tauntaun = new Product('tauntaun', './assets/tauntaun.jpg');
+let unicorn = new Product('unicorn', './assets/unicorn.jpg');
+let water_can = new Product('water-can', './assets/water-can.jpg');
+let wine_glass = new Product('wine-glass', './assets/wine-glass');
 
 //makes stuff
 function constructImages(){
@@ -50,21 +77,29 @@ function constructImages(){
     //add src attrubute to images
     img_one.setAttribute('src',bag.path);
     img_two.setAttribute('src',banana.path);
-    //something wrong in above set attributs
+    img_three.setAttribute('src', bathroom.path);
+    //img_four.setAttribute('src', boots.path);
+    
     img_one.setAttribute('alt',bag.name);
     img_two.setAttribute('alt',banana.name);
+    img_three.setAttribute('alt', bathroom.name);
+    //img_four.setAttribute('alt', boots.name);
 
     img_one.addEventListener('click', trackClicks(bag));
     img_two.addEventListener('click', trackClicks(banana));
+    img_three.addEventListener('click', trackClicks(bathroom));
+    //img_four.addEventListener('click', trackClicks(boots));
 
-    
-
-    timesShown(bag) //put here bc this is where alt is
+    //put here bc this is where alt is
+    timesShown(bathroom)
+    timesShown(bag)
+    timesShown(banana) 
+    //timesShown(boots)
 }
 
 //make a function to randomly display images
 function displayRandomImage(){
-    //call the randomizer algorithm
+    getRandomImage() //call the randomizer algorithm
 }
 
 //make method to track clicks
