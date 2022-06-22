@@ -3,8 +3,8 @@
 //list of problems so far:
 //console shows "there is no image here" on bathroom despite the image being there
 //clicks are not being counted
-//can't tell if the randomizer function works
-//for only three things at a time: use js not html 
+//randomizer function does not work
+//for only three things at a time: use js not html (for loop)
 
 
 
@@ -15,20 +15,24 @@ let maxClicks = 25;
 let totalClicks = 0;
 //holds all product names
 let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
-
 //create constructor function that creates an object associated with each product
 function Product(name, path){
 this.timesShown=0;
 this.timesClicked=0;
 this.name=name;
 this.path=path;
+this.trackClicks = function(event){
+    console.log(`you clicked this product ${this.timesClicked} times`) //finish this
+}
 allProducts.push(this); //passes products through function
 }
 
 //algorithm is a step by step list of instructions to be executed
 //algorithms are functions
 function getRandomImage(){
-    return Math.floor(Math.random()*productNames.length); //math dot floor gives a whole number and math dot random gives me random value; return makes it do something
+    //for(let i=0; i <3; i++){
+    return Math.floor(Math.random()*productNames.length);
+    //} //math dot floor gives a whole number and math dot random gives me random value; return makes it do something
     //run this on every product
     //dot length returns random index number of names array
 }
@@ -41,6 +45,7 @@ const resultContainer = document.getElementById('results');
 let img_one = document.querySelector('#image-container img:first-child');
 let img_two = document.querySelector('#image-container img:nth-child(2)');
 let img_three = document.querySelector('#image-container img:nth-child(3)');
+let img_four = document.querySelector('#image-container img:nth-child(4)');
 let resultsButton = document.getElementById('results-button')
 
 //add event listener
@@ -69,39 +74,6 @@ let unicorn = new Product('unicorn', './assets/unicorn.jpg');
 let water_can = new Product('water-can', './assets/water-can.jpg');
 let wine_glass = new Product('wine-glass', './assets/wine-glass');
 
-//makes stuff
-function constructImages(){
-    //make an image for every name in name array
-   // for(let i=0;i<productNames.length;i++){
-   //i mightve been on the right track here
-    //add src attrubute to images
-    img_one.setAttribute('src',bag.path);
-    img_two.setAttribute('src',banana.path);
-    img_three.setAttribute('src', bathroom.path);
-    //img_four.setAttribute('src', boots.path);
-    
-    img_one.setAttribute('alt',bag.name);
-    img_two.setAttribute('alt',banana.name);
-    img_three.setAttribute('alt', bathroom.name);
-    //img_four.setAttribute('alt', boots.name);
-
-    img_one.addEventListener('click', trackClicks(bag));
-    img_two.addEventListener('click', trackClicks(banana));
-    img_three.addEventListener('click', trackClicks(bathroom));
-    //img_four.addEventListener('click', trackClicks(boots));
-
-    //put here bc this is where alt is
-    timesShown(bathroom)
-    timesShown(bag)
-    timesShown(banana) 
-    //timesShown(boots)
-}
-
-//make a function to randomly display images
-function displayRandomImage(){
-    getRandomImage() //call the randomizer algorithm
-}
-
 //make method to track clicks
 function trackClicks(product){
     //whatever is in parameters is a placeholder
@@ -118,6 +90,41 @@ function trackClicks(product){
     //THEN increase the value by one
     } //make this apply to every picture
 
+//makes stuff
+function constructImages(){
+    //make an image for every name in name array
+   // for(let i=0;i<productNames.length;i++){
+   //i mightve been on the right track here
+    //add src attrubute to images
+    img_one.setAttribute('src',bag.path);
+    img_two.setAttribute('src',banana.path);
+    img_three.setAttribute('src', bathroom.path);
+    img_four.setAttribute('src', boots.path);
+    
+    img_one.setAttribute('alt',bag.name);
+    img_two.setAttribute('alt',banana.name);
+    img_three.setAttribute('alt', bathroom.name);
+    img_four.setAttribute('alt', boots.name);
+
+    img_one.addEventListener('click', trackClicks(bag));
+    img_two.addEventListener('click', trackClicks(banana));
+    img_three.addEventListener('click', trackClicks(bathroom));
+    img_four.addEventListener('click', trackClicks(boots));
+
+    //put here bc this is where alt is
+    timesShown(bathroom)
+    timesShown(bag)
+    timesShown(banana) 
+    timesShown(boots)
+}
+
+//make a function to randomly display images
+function displayRandomImage(){
+    getRandomImage() //call the randomizer algorithm
+}
+
+
+
 //how many times it was shown
 function timesShown(product){
     //check if the image is here
@@ -126,7 +133,7 @@ function timesShown(product){
         product.timesShown++
         console.log(product.timesShown)
     }else if
-    (product.name === img_two.alt){
+    (product.name === img_two.alt || product.name === img_three.alt || product.name === img_four.alt ){
     console.log(product.name + ' is on the page')
     product.timesShown++
     console.log(product.timesShown)
