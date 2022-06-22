@@ -4,7 +4,7 @@
 //console shows "there is no image here" on bathroom despite the image being there
 //clicks are not being counted
 //can't tell if the randomizer function works
-//don't know how to only show 3 images at once 
+//for only three things at a time: use js not html 
 
 
 
@@ -73,7 +73,7 @@ let wine_glass = new Product('wine-glass', './assets/wine-glass');
 function constructImages(){
     //make an image for every name in name array
    // for(let i=0;i<productNames.length;i++){
-   
+   //i mightve been on the right track here
     //add src attrubute to images
     img_one.setAttribute('src',bag.path);
     img_two.setAttribute('src',banana.path);
