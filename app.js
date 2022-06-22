@@ -88,7 +88,8 @@ function trackClicks(product){
     }
     //IF the object is clicked ->
     //THEN increase the value by one
-    } //make this apply to every picture
+    } //make this apply to every picturels
+    
 
 //makes stuff
 function constructImages(){
