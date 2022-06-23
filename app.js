@@ -12,7 +12,8 @@
 let allProducts = [];
 //sets click limit to 25 times
 let maxClicks = 25; 
-let totalClicks = 0;
+let totalClicks = 0; 
+let allClicks = [];
 //holds all product names
 let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 
@@ -62,9 +63,9 @@ function constructImages(){
     img_two.setAttribute('alt',banana.name);
     img_three.setAttribute('alt', bathroom.name);
 
-    img_one.addEventListener('click', trackClicks(bag));
-    img_two.addEventListener('click', trackClicks(banana));
-    img_three.addEventListener('click', trackClicks(bathroom));
+    img_one.addEventListener('click', function() {trackClicks(bag)});
+    img_two.addEventListener('click', function() {trackClicks(banana)});
+    img_three.addEventListener('click', function() {trackClicks(bathroom)});
 
 
     //put here bc this is where alt is
@@ -141,7 +142,7 @@ function timesShown(product){
 
 //display results on the results div
 function displayResults(productsArray){
-    
+
 for (let i=0;i<productsArray.length;i++){
    let product =productsArray[i]
    //console.log(product)
@@ -169,12 +170,13 @@ function showResults(){
 resultsButton.addEventListener('click', function () {
     alert('Here are your results');
     //pull canvas element from html
-    let canvas = document.getElementById('canvas');
+    let canvas = document.getElementById('myChart')
+    
     //make a chart
     const ctx = canvas.getContext('2d'); //draws in 2d
 
     //create a bar chart that shows the amount of clicks and times shown
-    const myChart = new CharacterData(ctx, {
+    const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: productNames,
