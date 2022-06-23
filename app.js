@@ -12,7 +12,7 @@
 let allProducts = [];
 //sets click limit to 25 times
 let maxClicks = 25; 
-let totalClicks = 0;
+let totalClicks = [];
 //holds all product names
 let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 //create constructor function that creates an object associated with each product
@@ -51,6 +51,8 @@ let resultsButton = document.getElementById('results-button')
 //add event listener
 resultsButton.addEventListener('click', showResults)
 
+
+
 //below:instance variables -> object
 let bag = new Product('bag', './assets/bag.jpg')
 //or
@@ -58,21 +60,21 @@ let bag = new Product('bag', './assets/bag.jpg')
 let banana = new Product('banana', './assets/banana.jpg');
 let bathroom = new Product('bathroom', './assets/bathroom.jpg');
 let boots = new Product('boots', './assets/boots.jpg');
-let breakfast = new Product('breakfast', './assets/breakfast.jpg');
-let bubblegum = new Product('bubblegum', './assets/bubbulegum.jpg');
-let chair = new Product('chair', './assets/chair.jpg');
-let cthulhu = new Product('cthulhu', './assets/cthulhu.jpg');
-let dog_duck = new Product('dog-duck', './assets/dog-duck.jpg');
-let dragon = new Product('dragon', './assets/dragon.jpg');
-let pen = new Product('pen', './assets/pen.jpg');
-let pet_sweep = new Product('pet-sweep', './assets/pet-sweep.jpg');
-let scissors = new Product('scissors', './assets/scissors.jpg');
-let shark = new Product('shark', './assets/shark.jpg');
-let sweep = new Product('sweep', './assets/sweep.jpg');
-let tauntaun = new Product('tauntaun', './assets/tauntaun.jpg');
-let unicorn = new Product('unicorn', './assets/unicorn.jpg');
-let water_can = new Product('water-can', './assets/water-can.jpg');
-let wine_glass = new Product('wine-glass', './assets/wine-glass');
+//let breakfast = new Product('breakfast', './assets/breakfast.jpg');
+// let bubblegum = new Product('bubblegum', './assets/bubbulegum.jpg');
+// let chair = new Product('chair', './assets/chair.jpg');
+// let cthulhu = new Product('cthulhu', './assets/cthulhu.jpg');
+// let dog_duck = new Product('dog-duck', './assets/dog-duck.jpg');
+// let dragon = new Product('dragon', './assets/dragon.jpg');
+// let pen = new Product('pen', './assets/pen.jpg');
+// let pet_sweep = new Product('pet-sweep', './assets/pet-sweep.jpg');
+// let scissors = new Product('scissors', './assets/scissors.jpg');
+// let shark = new Product('shark', './assets/shark.jpg');
+// let sweep = new Product('sweep', './assets/sweep.jpg');
+// let tauntaun = new Product('tauntaun', './assets/tauntaun.jpg');
+// let unicorn = new Product('unicorn', './assets/unicorn.jpg');
+// let water_can = new Product('water-can', './assets/water-can.jpg');
+// let wine_glass = new Product('wine-glass', './assets/wine-glass');
 
 //make method to track clicks
 function trackClicks(product){
@@ -100,23 +102,22 @@ function constructImages(){
     img_one.setAttribute('src',bag.path);
     img_two.setAttribute('src',banana.path);
     img_three.setAttribute('src', bathroom.path);
-    img_four.setAttribute('src', boots.path);
+    
     
     img_one.setAttribute('alt',bag.name);
     img_two.setAttribute('alt',banana.name);
     img_three.setAttribute('alt', bathroom.name);
-    img_four.setAttribute('alt', boots.name);
 
     img_one.addEventListener('click', trackClicks(bag));
     img_two.addEventListener('click', trackClicks(banana));
     img_three.addEventListener('click', trackClicks(bathroom));
-    img_four.addEventListener('click', trackClicks(boots));
+
 
     //put here bc this is where alt is
     timesShown(bathroom)
     timesShown(bag)
     timesShown(banana) 
-    timesShown(boots)
+
 }
 
 //make a function to randomly display images
@@ -167,9 +168,78 @@ function showResults(){
     }
 }
 
+
 //add event listeners
+resultsButton.addEventListener('click', function () {
+    alert('Here are your results');
+    //pull canvas element from html
+    let canvas = document.getElementById('canvas');
+    //make a chart
+    const ctx = canvas.getContext('2d'); //draws in 2d
+
+    //create a bar chart that shows the amount of clicks and times shown
+    const myChart = new CharacterData(ctx, {
+        type: 'bar',
+        data: {
+            labels: productNames,
+            datasets: [{
+                label: '# of Clicks',
+                data: allClicks,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            },
+            {
+              label: '# of View',
+              data: timesSeen,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    } 
+            });
+        }
+)
+    
 
 //executable code
+showResults();
+constructImages();
 
-constructImages()
+
 
