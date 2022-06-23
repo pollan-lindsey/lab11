@@ -12,18 +12,17 @@
 let allProducts = [];
 //sets click limit to 25 times
 let maxClicks = 25; 
-let totalClicks = [];
+let totalClicks = 0;
 //holds all product names
 let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
+
 //create constructor function that creates an object associated with each product
 function Product(name, path){
 this.timesShown=0;
 this.timesClicked=0;
 this.name=name;
 this.path=path;
-this.trackClicks = function(event){
-    console.log(`you clicked this product ${this.timesClicked} times`) //finish this
-}
+
 allProducts.push(this); //passes products through function
 }
 
@@ -49,7 +48,37 @@ let img_four = document.querySelector('#image-container img:nth-child(4)');
 let resultsButton = document.getElementById('results-button')
 
 //add event listener
+function constructImages(){
+    //make an image for every name in name array
+   // for(let i=0;i<productNames.length;i++){
+   //i mightve been on the right track here
+    //add src attrubute to images
+    img_one.setAttribute('src',bag.path);
+    img_two.setAttribute('src',banana.path);
+    img_three.setAttribute('src', bathroom.path);
+    
+    
+    img_one.setAttribute('alt',bag.name);
+    img_two.setAttribute('alt',banana.name);
+    img_three.setAttribute('alt', bathroom.name);
+
+    img_one.addEventListener('click', trackClicks(bag));
+    img_two.addEventListener('click', trackClicks(banana));
+    img_three.addEventListener('click', trackClicks(bathroom));
+
+
+    //put here bc this is where alt is
+    timesShown(bathroom)
+    timesShown(bag)
+    timesShown(banana) 
+
+}
 resultsButton.addEventListener('click', showResults)
+
+//make a function to randomly display images
+function displayRandomImage(){
+    getRandomImage() //call the randomizer algorithm
+}
 
 
 
@@ -80,65 +109,31 @@ let boots = new Product('boots', './assets/boots.jpg');
 function trackClicks(product){
     //whatever is in parameters is a placeholder
     //check the timesClicked property against the max clicks
-    if (product.timesClicked < 25){
+    if (totalClicks < maxClicks){
         product.timesClicked++
         totalClicks++
         console.log(product.timesClicked);
     }
     else{
         alert('too many clicks')
+        allClicks.push(bag.timesClicked, banana.timesClicked, bathroom.timesClicked)
+        console.log(allClicks)
     }
     //IF the object is clicked ->
     //THEN increase the value by one
     } //make this apply to every picturels
-    
+  
 
 //makes stuff
-function constructImages(){
-    //make an image for every name in name array
-   // for(let i=0;i<productNames.length;i++){
-   //i mightve been on the right track here
-    //add src attrubute to images
-    img_one.setAttribute('src',bag.path);
-    img_two.setAttribute('src',banana.path);
-    img_three.setAttribute('src', bathroom.path);
-    
-    
-    img_one.setAttribute('alt',bag.name);
-    img_two.setAttribute('alt',banana.name);
-    img_three.setAttribute('alt', bathroom.name);
-
-    img_one.addEventListener('click', trackClicks(bag));
-    img_two.addEventListener('click', trackClicks(banana));
-    img_three.addEventListener('click', trackClicks(bathroom));
-
-
-    //put here bc this is where alt is
-    timesShown(bathroom)
-    timesShown(bag)
-    timesShown(banana) 
-
-}
-
-//make a function to randomly display images
-function displayRandomImage(){
-    getRandomImage() //call the randomizer algorithm
-}
-
 
 
 //how many times it was shown
 function timesShown(product){
     //check if the image is here
-    if(product.name === img_one.alt){
+    if(product.name === img_one.alt || product.name === img_two.alt || product.name === img_three.alt){
         console.log(product.name + ' is on the page')
         product.timesShown++
         console.log(product.timesShown)
-    }else if
-    (product.name === img_two.alt || product.name === img_three.alt || product.name === img_four.alt ){
-    console.log(product.name + ' is on the page')
-    product.timesShown++
-    console.log(product.timesShown)
     }else{
         console.log('there is no image here')
     }
@@ -146,6 +141,7 @@ function timesShown(product){
 
 //display results on the results div
 function displayResults(productsArray){
+    
 for (let i=0;i<productsArray.length;i++){
    let product =productsArray[i]
    //console.log(product)
