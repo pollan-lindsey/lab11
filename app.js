@@ -1,8 +1,6 @@
 'use strict';
 
 //list of problems so far:
-//console shows "there is no image here" on bathroom despite the image being there
-//clicks are not being counted
 //randomizer function does not work
 //for only three things at a time: use js not html (for loop)
 
@@ -12,7 +10,9 @@
 let allProducts = [];
 //sets click limit to 25 times
 let maxClicks = 25; 
-let totalClicks = 0; 
+//starts total clicks at 0 to count up everytime an image is clicked
+let totalClicks = 0;
+//an array that elements are pushed into at a later time 
 let allClicks = [];
 //holds all product names
 let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
@@ -21,91 +21,70 @@ let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegu
 function Product(name, path){
 this.timesShown=0;
 this.timesClicked=0;
+//allows me to use name and path at a later time:
 this.name=name;
 this.path=path;
 
 allProducts.push(this); //passes products through function
 }
 
-//algorithm is a step by step list of instructions to be executed
-//algorithms are functions
-function getRandomImage(){
-    //for(let i=0; i <3; i++){
-    return Math.floor(Math.random()*productNames.length);
-    //} //math dot floor gives a whole number and math dot random gives me random value; return makes it do something
-    //run this on every product
-    //dot length returns random index number of names array
+//go through every product and attach image stuff to it
+function makeNewProduct(){
+    //for loop goes through every product
+    for(let i=0; i<productNames.length; i++){
+        //refer to the only png image (sweep)
+        if(productNames[i] === 'sweep'){
+            //make sweep an image
+            new Product(`${productNames[i]}`, `./assets/${productNames[i]}.png`);
+        }else{
+            //make every other item an image
+            new Product(`${productNames[i]}`, `./assets/${productNames[i]}.jpg`); 
+        }
+    }
 }
+
+
 
 
 //global variables to represent div
 //get elements from html file
 const imageContainer = document.getElementById('image-container');
 const resultContainer = document.getElementById('results');
-let img_one = document.querySelector('#image-container img:first-child');
-let img_two = document.querySelector('#image-container img:nth-child(2)');
-let img_three = document.querySelector('#image-container img:nth-child(3)');
-let img_four = document.querySelector('#image-container img:nth-child(4)');
-let resultsButton = document.getElementById('results-button')
+//the three images to be displayed on the page:
+let img_one = document.getElementById('img-one');
+let img_two = document.getElementById('img-two');
+let img_three = document.getElementById('img-three');
+//the result button from html
+let resultsButton = document.getElementById('results-button');
 
-//add event listener
-function constructImages(){
-    //make an image for every name in name array
-   // for(let i=0;i<productNames.length;i++){
-   //i mightve been on the right track here
-    //add src attrubute to images
-    img_one.setAttribute('src',bag.path);
-    img_two.setAttribute('src',banana.path);
-    img_three.setAttribute('src', bathroom.path);
-    
-    
-    img_one.setAttribute('alt',bag.name);
-    img_two.setAttribute('alt',banana.name);
-    img_three.setAttribute('alt', bathroom.name);
+//put the images into an array to be used when randomizing three images:
+let imgArray = [img_one, img_two, img_three];
 
-    img_one.addEventListener('click', function() {trackClicks(bag)});
-    img_two.addEventListener('click', function() {trackClicks(banana)});
-    img_three.addEventListener('click', function() {trackClicks(bathroom)});
-
-
-    //put here bc this is where alt is
-    timesShown(bathroom)
-    timesShown(bag)
-    timesShown(banana) 
-
+//generate a random image:
+function getRandomImage(image){
+    let mathAlgorithm = Math.floor(Math.random() * allProducts.length);
+    //} //math dot floor gives a whole number and math dot random gives me random value; return makes it do something
+    //run this on every product
+    //dot length returns random index number of names array
+    //to return object
+    let selectedImage = allProducts[mathAlgorithm];
+    //add object requirements
+    image.src = selectedImage.filePath;
+    image.alt = selectedImage.name;
+    //increment times shown
+    selectedImage.timesShown++;
 }
+
+//connects results to the results button
 resultsButton.addEventListener('click', showResults)
 
-//make a function to randomly display images
-function displayRandomImage(){
-    getRandomImage() //call the randomizer algorithm
+//make a function to randomly display 3 images
+function showImage(){
+//use image array made earlier
+    for (i=0; i < imgArray.length; i++) {
+        getRandomImage(imgArray[i]); //use i as a placeholder for specific product
+    }
 }
-
-
-
-//below:instance variables -> object
-let bag = new Product('bag', './assets/bag.jpg')
-//or
-//let bag0 = new Product(productNames[0], './assets' + productNames[0] + '.jpg')
-let banana = new Product('banana', './assets/banana.jpg');
-let bathroom = new Product('bathroom', './assets/bathroom.jpg');
-let boots = new Product('boots', './assets/boots.jpg');
-//let breakfast = new Product('breakfast', './assets/breakfast.jpg');
-// let bubblegum = new Product('bubblegum', './assets/bubbulegum.jpg');
-// let chair = new Product('chair', './assets/chair.jpg');
-// let cthulhu = new Product('cthulhu', './assets/cthulhu.jpg');
-// let dog_duck = new Product('dog-duck', './assets/dog-duck.jpg');
-// let dragon = new Product('dragon', './assets/dragon.jpg');
-// let pen = new Product('pen', './assets/pen.jpg');
-// let pet_sweep = new Product('pet-sweep', './assets/pet-sweep.jpg');
-// let scissors = new Product('scissors', './assets/scissors.jpg');
-// let shark = new Product('shark', './assets/shark.jpg');
-// let sweep = new Product('sweep', './assets/sweep.jpg');
-// let tauntaun = new Product('tauntaun', './assets/tauntaun.jpg');
-// let unicorn = new Product('unicorn', './assets/unicorn.jpg');
-// let water_can = new Product('water-can', './assets/water-can.jpg');
-// let wine_glass = new Product('wine-glass', './assets/wine-glass');
-
 //make method to track clicks
 function trackClicks(product){
     //whatever is in parameters is a placeholder
@@ -117,8 +96,8 @@ function trackClicks(product){
     }
     else{
         alert('too many clicks')
-        allClicks.push(bag.timesClicked, banana.timesClicked, bathroom.timesClicked)
-        console.log(allClicks)
+        allClicks.push(productNames.timesClicked)//adds images to allClicks array
+        console.log(allClicks) //displays the array allClicks in log when there have been 25 clicks
     }
     //IF the object is clicked ->
     //THEN increase the value by one
@@ -132,6 +111,7 @@ function trackClicks(product){
 function timesShown(product){
     //check if the image is here
     if(product.name === img_one.alt || product.name === img_two.alt || product.name === img_three.alt){
+        //potential replacement of above: if(product.name === allAlts)
         console.log(product.name + ' is on the page')
         product.timesShown++
         console.log(product.timesShown)
@@ -155,7 +135,6 @@ for (let i=0;i<productsArray.length;i++){
   p.textContent = resultMessage;
   resultContainer.appendChild(p)
 } 
-//change above function based on pic on phone
 }
 
 function showResults(){
