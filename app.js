@@ -42,7 +42,7 @@ function makeNewProduct(){
         }
     }
 }
-
+makeNewProduct();
 
 
 
@@ -81,10 +81,11 @@ resultsButton.addEventListener('click', showResults)
 //make a function to randomly display 3 images
 function showImage(){
 //use image array made earlier
-    for (i=0; i < imgArray.length; i++) {
+    for ( let i=0; i < imgArray.length; i++) {
         getRandomImage(imgArray[i]); //use i as a placeholder for specific product
     }
 }
+showImage();
 //make method to track clicks
 function trackClicks(product){
     //whatever is in parameters is a placeholder
@@ -213,10 +214,15 @@ resultsButton.addEventListener('click', function () {
         }
 )
     
+//storage
+for(let i=0; i<allProducts.length; i++){
+    //puts results aka product and times clicked into storage
+    localStorage.setItem(`Product: ${allProducts[i].name}`, `Times Clicked: ${allProducts[i].timesClicked}`);
+}
 
 //executable code
 showResults();
-constructImages();
+
 
 
 
