@@ -54,6 +54,10 @@ const resultContainer = document.getElementById('results');
 let img_one = document.getElementById('img-one');
 let img_two = document.getElementById('img-two');
 let img_three = document.getElementById('img-three');
+
+//get the rest of the image info from html
+//let src = document.getElementById('src');
+
 //the result button from html
 let resultsButton = document.getElementById('results-button');
 
@@ -69,12 +73,14 @@ function getRandomImage(image){
     //to return object
     let selectedImage = allProducts[mathAlgorithm];
     //add object requirements
-    image.src = selectedImage.filePath;
+    image.src = selectedImage.path; //this is where my problem is
     image.alt = selectedImage.name;
     //increment times shown
     selectedImage.timesShown++;
 }
 
+
+getRandomImage(imgArray)
 //connects results to the results button
 resultsButton.addEventListener('click', showResults)
 
@@ -120,29 +126,30 @@ function timesShown(product){
         console.log('there is no image here')
     }
 }
+timesShown(Product);
 
+img_one.addEventListener('click', trackClicks);
+img_two.addEventListener('click', trackClicks);
+img_three.addEventListener('click', trackClicks);
+
+img_one.addEventListener('click', Product.timesClicked)
+img_two.addEventListener('click', Product.timesClicked)
+img_three.addEventListener('click', Product.timesClicked)
 //display results on the results div
 function displayResults(productsArray){
 
 for (let i=0;i<productsArray.length;i++){
-   let product =productsArray[i]
+   let product = productsArray[i]
    //console.log(product)
   let resultMessage = `this product was clicked ${product.timesClicked} times
   this product was shown ${product.timesShown} times
   this product is called ${product.name}
   you can find this product at : ${product.path} !!!`
-  
   let p = document.createElement('p');
   p.textContent = resultMessage;
   resultContainer.appendChild(p)
-} 
-}
 
-function showResults(){
-    //check to see if the max clicks are met
-    if (totalClicks === maxClicks){
-        displayResults(allProducts)
-    }
+} 
 }
 
 
@@ -220,9 +227,16 @@ for(let i=0; i<allProducts.length; i++){
     localStorage.setItem(`Product: ${allProducts[i].name}`, `Times Clicked: ${allProducts[i].timesClicked}`);
 }
 
+function showResults(){
+    //check to see if the max clicks are met
+    if (totalClicks === maxClicks){
+        displayResults(allProducts)
+    }
+}
+
 //executable code
 showResults();
-
+getRandomImage(imgArray);
 
 
 
