@@ -1,11 +1,11 @@
 'use strict';
 
 //list of problems so far:
-//randomizer function does not work
-//for only three things at a time: use js not html (for loop)
+//lines 120-129
+//line 79
 
 
-
+let imgArray = [];
 //holds all product objects
 let allProducts = [];
 //sets click limit to 25 times
@@ -61,8 +61,11 @@ let img_three = document.getElementById('img-three');
 //the result button from html
 let resultsButton = document.getElementById('results-button');
 
-//put the images into an array to be used when randomizing three images:
-let imgArray = [img_one, img_two, img_three];
+imgArray.push(img_one);
+imgArray.push(img_two);
+imgArray.push(img_three);
+
+console.log(imgArray);
 
 //generate a random image:
 function getRandomImage(image){
@@ -73,14 +76,17 @@ function getRandomImage(image){
     //to return object
     let selectedImage = allProducts[mathAlgorithm];
     //add object requirements
-    image.src = selectedImage.path; //this is where my problem is
+    image.src = selectedImage.path; //this is where my problem is once again
     image.alt = selectedImage.name;
     //increment times shown
     selectedImage.timesShown++;
 }
 
+//put the images into an array to be used when randomizing three images:
 
-getRandomImage(imgArray)
+
+
+getRandomImage(productNames);
 //connects results to the results button
 resultsButton.addEventListener('click', showResults)
 
@@ -110,15 +116,10 @@ function trackClicks(product){
     //THEN increase the value by one
     } //make this apply to every picturels
   
-
-//makes stuff
-
-
 //how many times it was shown
 function timesShown(product){
     //check if the image is here
     if(product.name === img_one.alt || product.name === img_two.alt || product.name === img_three.alt){
-        //potential replacement of above: if(product.name === allAlts)
         console.log(product.name + ' is on the page')
         product.timesShown++
         console.log(product.timesShown)
@@ -126,7 +127,7 @@ function timesShown(product){
         console.log('there is no image here')
     }
 }
-timesShown(Product);
+timesShown(Product.name);
 
 img_one.addEventListener('click', trackClicks);
 img_two.addEventListener('click', trackClicks);
